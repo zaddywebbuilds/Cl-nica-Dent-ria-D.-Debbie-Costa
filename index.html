@@ -1,734 +1,1519 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clínica Dentária D.ª Debbie Costa — Cedros, Faial, Açores</title>
+<meta name="description" content="Clínica Dentária Debbie Costa — Cuidados de Medicina Dentária em Cedros, Faial, Açores. Medicina Dentária Geral, Cirurgia Oral, Periodontologia, Prostodontia e Ortodontia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background: #fff; color: #1a1a2e; line-height: 1.6; overflow-x: hidden; }
-a { text-decoration: none; color: inherit; }
-img, video { display: block; }
-
-/* ─────────────────────────────
-   NAV
-───────────────────────────── */
-.nav {
-  position: sticky; top: 0; z-index: 100;
-  background: #fff;
-  border-bottom: 1px solid #ede8f8;
-  height: 70px;
-  display: flex; align-items: center;
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --white:          #FFFFFF;
+  --lav-white:      #FBFAFF;
+  --lav-mist:       #F6F3FF;
+  --navy:           #11183F;
+  --navy-2:         #20254F;
+  --purple:         #6934D9;
+  --purple-el:      #8448EE;
+  --purple-deep:    #5120B8;
+  --lav-soft:       #C7B5FF;
+  --lav-pale:       #ECE6FF;
+  --magenta:        #A838E8;
+  --g-cta:          linear-gradient(135deg,#5727C7 0%,#7139DF 50%,#934EEA 100%);
+  --g-text:         linear-gradient(90deg,#6A35DA,#A442E8);
+  --g-banner:       linear-gradient(110deg,#241069 0%,#5221A9 45%,#A238D9 100%);
+  --shadow-feature: 0 25px 70px rgba(76,44,150,.10);
+  --shadow-card:    0 8px 32px rgba(90,50,170,.07);
+  --shadow-hover:   0 20px 56px rgba(90,50,170,.16);
+  --r-card:         20px;
+  --r-lg:           28px;
+  --max-w:          1360px;
+  --pad-x:          60px;
+  --transition:     250ms cubic-bezier(.4,0,.2,1);
 }
-.nav-wrap {
-  max-width: 1280px; margin: 0 auto; padding: 0 2rem;
-  width: 100%;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--white);
+  color: var(--navy);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img, video { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* ═══════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════ */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+.gradient-text {
+  background: var(--g-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.eyebrow {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--purple);
+  display: block;
+  margin-bottom: 14px;
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .65s ease, transform .65s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity:1; transform: none; transition: none; }
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.header {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201,184,255,.18);
+  transition: box-shadow var(--transition), background var(--transition);
+}
+.header.scrolled {
+  box-shadow: 0 4px 32px rgba(76,44,150,.08);
+  background: rgba(255,255,255,.98);
+}
+.header-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
 /* Logo */
-.logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.logo-icon { color: #7c4dcc; }
-.logo-icon svg { width: 38px; height: 38px; }
-.logo-text {}
+.logo { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+.logo-mark { width: 40px; height: 40px; flex-shrink: 0; }
+.logo-text { line-height: 1.1; }
 .logo-name {
-  font-size: 1.1rem; font-weight: 900; letter-spacing: 0.06em;
-  color: #1a1a2e; line-height: 1;
-  text-transform: uppercase;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -.01em;
+  display: block;
 }
 .logo-sub {
-  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: #888; line-height: 1; margin-top: 2px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--purple);
+  display: block;
 }
-/* Links */
-.nav-links { display: flex; align-items: center; gap: 0; list-style: none; }
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+}
 .nav-links a {
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  color: #555; padding: 0.35rem 0.9rem; position: relative;
-  transition: color 0.2s;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy-2);
+  padding: .5rem 1.05rem;
+  position: relative;
+  transition: color var(--transition);
+  letter-spacing: .02em;
+  white-space: nowrap;
 }
-.nav-links a:hover { color: #7c4dcc; }
-.nav-links a.active {
-  color: #7c4dcc; font-weight: 700;
-}
+.nav-links a:hover { color: var(--purple); }
+.nav-links a.active { color: var(--purple); }
 .nav-links a.active::after {
-  content: ''; position: absolute; bottom: -4px; left: 0.9rem; right: 0.9rem;
-  height: 2.5px; background: #7c4dcc; border-radius: 2px;
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 1.05rem; right: 1.05rem;
+  height: 2px;
+  background: var(--purple);
+  border-radius: 2px;
 }
-/* Book button */
-.nav-book {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: #7c4dcc; color: #fff;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 0.65rem 1.35rem; border-radius: 6px; flex-shrink: 0;
-  transition: background 0.2s;
+/* CTA button */
+.btn-book {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--g-cta);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  padding: 0 28px;
+  height: 52px;
+  border-radius: 26px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 6px 24px rgba(87,39,199,.28);
 }
-.nav-book:hover { background: #6a3db8; }
-.nav-book svg { width: 14px; height: 14px; }
+.btn-book:hover {
+  opacity: .92;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(87,39,199,.38);
+}
+.btn-book svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-/* ─────────────────────────────
+/* ═══════════════════════════════════════
    HERO
-───────────────────────────── */
+═══════════════════════════════════════ */
 .hero {
+  position: relative;
+  min-height: 760px;
   display: grid;
-  grid-template-columns: 45% 55%;
-  min-height: calc(100vh - 70px);
-  background: #fff;
+  grid-template-columns: 44% 56%;
+  overflow: hidden;
+  background: var(--white);
+}
+/* Atmospheric glow */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: -100px;
+  width: 680px; height: 680px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(130,72,238,.09), transparent 65%);
+  pointer-events: none;
+}
+
+/* LEFT */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 48px 80px var(--pad-x);
+  position: relative;
+  z-index: 2;
+}
+.hero-eyebrow {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 2px;
+  background: var(--g-cta);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.hero-h1 {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(40px, 4.5vw, 66px);
+  font-weight: 800;
+  line-height: 1.07;
+  letter-spacing: -.035em;
+  color: var(--navy);
+  margin-bottom: 22px;
+  max-width: 15em;
+}
+.hero-desc {
+  font-size: 17px;
+  line-height: 1.72;
+  color: #4B5280;
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+.hero-btns {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--g-cta);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  padding: 0 30px;
+  height: 54px;
+  border-radius: 27px;
+  box-shadow: 0 8px 28px rgba(87,39,199,.3);
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.btn-primary:hover {
+  opacity: .92;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(87,39,199,.4);
+}
+.btn-primary svg { width: 15px; height: 15px; }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: transparent;
+  color: var(--navy);
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 26px;
+  height: 54px;
+  border-radius: 27px;
+  border: 1.5px solid #D5C9F8;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+.btn-secondary:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+  background: rgba(105,52,217,.04);
+}
+.btn-secondary svg { width: 15px; height: 15px; }
+/* Trust row */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.trust-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+.trust-avatars span {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  margin-right: -10px;
+  background: linear-gradient(135deg, var(--lav-soft), var(--purple-el));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px; font-weight: 700;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+.trust-avatars span img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.trust-info { margin-left: 8px; }
+.trust-main {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.trust-sub {
+  font-size: 12.5px;
+  color: #7A82AA;
+  margin-top: 1px;
+}
+
+/* RIGHT */
+.hero-right {
+  position: relative;
   overflow: hidden;
 }
-/* Left */
-.hero-left {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 4rem 3rem 4rem 2rem;
-  max-width: 620px;
-  padding-left: calc((100vw - 1280px) / 2 + 2rem);
+.hero-img-wrap {
+  position: absolute;
+  inset: 0;
 }
-@media (max-width: 1280px) { .hero-left { padding-left: 2.5rem; } }
-.hero-eyebrow {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  color: #7c4dcc; margin-bottom: 1rem;
+.hero-img-wrap img,
+.hero-img-wrap video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
-.hero-left h1 {
-  font-size: clamp(2.2rem, 3.8vw, 3.5rem); font-weight: 900;
-  line-height: 1.08; letter-spacing: -0.03em; color: #1a1a2e;
-  margin-bottom: 1.1rem;
+/* Gradient mask — blends left edge of image into hero white */
+.hero-img-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    rgba(255,255,255,1) 0%,
+    rgba(255,255,255,.3) 22%,
+    transparent 44%);
+  z-index: 1;
+  pointer-events: none;
 }
-.hero-left h1 .purple { color: #7c4dcc; }
-.hero-desc {
-  font-size: 0.92rem; color: #666; line-height: 1.75; max-width: 40ch;
-  margin-bottom: 2rem;
-}
-.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: #7c4dcc; color: #fff;
-  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 0.85rem 1.6rem; border-radius: 6px;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-}
-.btn-primary:hover { background: #6a3db8; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,77,204,0.35); }
-.btn-primary svg { width: 14px; height: 14px; }
-.btn-outline {
-  display: inline-flex; align-items: center; gap: 0.55rem;
-  border: 1.5px solid #ccc; color: #444;
-  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
-  padding: 0.85rem 1.4rem; border-radius: 6px; background: transparent;
-  transition: border-color 0.2s, color 0.2s;
-}
-.btn-outline:hover { border-color: #7c4dcc; color: #7c4dcc; }
-.btn-outline .play-circle {
-  width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid currentColor;
-  display: flex; align-items: center; justify-content: center;
-}
-.btn-outline .play-circle svg { width: 8px; height: 8px; margin-left: 1px; }
-/* Trust bar */
-.hero-trust { display: flex; align-items: center; gap: 0.9rem; }
-.trust-avatars { display: flex; }
-.trust-avatars span {
-  width: 36px; height: 36px; border-radius: 50%; border: 2.5px solid #fff;
-  overflow: hidden; margin-right: -10px; background: #d4b8f0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.65rem; font-weight: 700; color: #7c4dcc;
-}
-.trust-avatars span img { width: 100%; height: 100%; object-fit: cover; }
-.trust-text { margin-left: 6px; }
-.trust-label { font-size: 0.8rem; font-weight: 600; color: #1a1a2e; }
-.trust-stars { display: flex; align-items: center; gap: 2px; margin-top: 1px; }
-.trust-stars svg { width: 13px; height: 13px; }
-.trust-stars .rating { font-size: 0.78rem; font-weight: 700; color: #1a1a2e; margin-left: 4px; }
-
-/* Right – full bleed image */
-.hero-right {
-  position: relative; overflow: hidden;
-}
-.hero-right video,
-.hero-right .hero-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
+/* Lavender atmospheric overlay */
+.hero-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(105,52,217,.06) 0%,
+    transparent 60%);
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* ─────────────────────────────
-   FEATURES STRIP
-───────────────────────────── */
-.features-wrap {
-  background: #f9f7ff;
-  padding: 0 2rem;
+/* ═══════════════════════════════════════
+   FEATURE PANEL (overlapping)
+═══════════════════════════════════════ */
+.features-zone {
+  background: linear-gradient(180deg, var(--white) 0%, var(--lav-white) 100%);
+  padding-bottom: 0;
+}
+.features-panel {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  transform: translateY(-60px);
 }
 .features-card {
-  max-width: 1280px; margin: 0 auto;
-  background: #fff;
-  border: 1px solid #ede8f8;
-  border-radius: 16px;
-  transform: translateY(-32px);
-  box-shadow: 0 8px 40px rgba(124,77,204,0.09);
-  display: grid; grid-template-columns: repeat(4,1fr);
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow: var(--shadow-feature);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgba(201,184,255,.22);
   overflow: hidden;
 }
-.feat {
-  padding: 2.2rem 1.75rem;
-  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.85rem;
-  border-right: 1px solid #ede8f8;
+.feat-col {
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-right: 1px solid rgba(201,184,255,.28);
+  transition: background var(--transition);
 }
-.feat:last-child { border-right: none; }
-.feat-icon { color: #7c4dcc; }
-.feat-icon svg { width: 42px; height: 42px; stroke-width: 1.4; }
-.feat h3 { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; }
-.feat p  { font-size: 0.78rem; color: #777; line-height: 1.6; max-width: 18ch; }
+.feat-col:last-child { border-right: none; }
+.feat-col:hover { background: var(--lav-white); }
+.feat-icon-wrap {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: var(--lav-pale);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+.feat-icon-wrap svg { width: 22px; height: 22px; color: var(--purple); stroke-width: 1.75; }
+.feat-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.25;
+}
+.feat-desc {
+  font-size: 13.5px;
+  color: #5D6490;
+  line-height: 1.6;
+}
 
-/* ─────────────────────────────
+/* ═══════════════════════════════════════
+   SECTION HEADINGS (shared)
+═══════════════════════════════════════ */
+.section-head h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(32px, 3vw, 46px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  color: var(--navy);
+}
+
+/* ═══════════════════════════════════════
    ABOUT
-───────────────────────────── */
+═══════════════════════════════════════ */
 .about {
-  background: #f9f7ff;
-  padding: 1rem 0 5rem;
+  background: var(--lav-white);
+  padding: 40px 0 110px;
 }
 .about-inner {
-  max-width: 1280px; margin: 0 auto; padding: 0 2rem;
-  display: grid; grid-template-columns: 1fr 1.15fr 0.75fr;
-  gap: 3.5rem; align-items: center;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: 30% 1fr 22%;
+  gap: 48px;
+  align-items: start;
 }
-.about-eyebrow {
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-  color: #7c4dcc; margin-bottom: 0.85rem;
+/* Left */
+.about-copy .section-head h2 { margin-bottom: 20px; }
+.about-copy p {
+  font-size: 16.5px;
+  color: #4B5280;
+  line-height: 1.75;
+  max-width: 46ch;
+  margin-bottom: 32px;
 }
-.about-text h2 {
-  font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900;
-  line-height: 1.1; letter-spacing: -0.02em; color: #1a1a2e;
-  margin-bottom: 1.2rem;
+.btn-outline-purple {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--purple);
+  border: 1.5px solid var(--lav-soft);
+  padding: 0 22px;
+  height: 46px;
+  border-radius: 23px;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
 }
-.about-text h2 .purple { color: #7c4dcc; }
-.about-text p { font-size: 0.88rem; color: #666; line-height: 1.8; max-width: 48ch; margin-bottom: 1.75rem; }
-.btn-learn-more {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em;
-  color: #1a1a2e; border: 1.5px solid #ccc;
-  padding: 0.65rem 1.25rem; border-radius: 6px;
-  transition: border-color 0.2s, color 0.2s;
+.btn-outline-purple:hover {
+  border-color: var(--purple);
+  background: rgba(105,52,217,.05);
+  box-shadow: 0 4px 16px rgba(105,52,217,.12);
 }
-.btn-learn-more:hover { border-color: #7c4dcc; color: #7c4dcc; }
-.btn-learn-more svg { width: 14px; height: 14px; }
-
-/* About video */
-.about-video {
-  position: relative; border-radius: 16px; overflow: hidden;
-  aspect-ratio: 1 / 1.05;
-  box-shadow: 0 24px 64px rgba(90,40,170,0.22);
-  cursor: pointer;
+.btn-outline-purple svg { width: 14px; height: 14px; transition: transform var(--transition); }
+.btn-outline-purple:hover svg { transform: translateX(3px); }
+/* Center image */
+.about-img-wrap {
+  position: relative;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  box-shadow: 0 30px 80px rgba(76,44,150,.13);
 }
-.about-video video,
-.about-video .about-img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+.about-img-wrap img,
+.about-img-wrap video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
 }
-.about-video-overlay {
-  position: absolute; inset: 0;
-  background: rgba(40,10,80,0.28);
+.about-img-wrap:hover img,
+.about-img-wrap:hover video { transform: scale(1.025); }
+/* Lavender glow behind image */
+.about-img-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(130,72,238,.12), transparent 60%);
+  z-index: -1;
+}
+/* Right cards */
+.about-cards { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
+.about-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 20px 22px;
+  border: 1px solid rgba(201,184,255,.3);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.about-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(90,50,170,.11);
+}
+.about-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--lav-pale);
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
+  margin-bottom: 4px;
 }
-.about-video:hover .about-video-overlay { background: rgba(40,10,80,0.18); }
-.play-btn-lg {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: rgba(255,255,255,0.22);
-  border: 2px solid rgba(255,255,255,0.5);
-  display: flex; align-items: center; justify-content: center;
-  transition: transform 0.2s, background 0.2s;
+.about-card-icon svg { width: 18px; height: 18px; color: var(--purple); stroke-width: 1.75; }
+.about-card h4 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--navy);
 }
-.about-video:hover .play-btn-lg { transform: scale(1.1); background: rgba(255,255,255,0.32); }
-.play-btn-lg svg { width: 22px; height: 22px; color: #fff; margin-left: 4px; }
-.about-video-tag {
-  position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
-  background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.25); border-radius: 20px;
-  padding: 0.3rem 0.9rem; white-space: nowrap;
-  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8);
-}
+.about-card p { font-size: 12.5px; color: #6270A0; line-height: 1.55; }
 
-/* About stats */
-.about-stats { display: flex; flex-direction: column; gap: 0; }
-.stat-row {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1.6rem 0;
-  border-bottom: 1px solid #e8e0f5;
-}
-.stat-row:first-child { padding-top: 0; }
-.stat-row:last-child { border-bottom: none; padding-bottom: 0; }
-.stat-ico { color: #7c4dcc; flex-shrink: 0; }
-.stat-ico svg { width: 28px; height: 28px; stroke-width: 1.5; }
-.stat-num  { font-size: 1.9rem; font-weight: 900; color: #1a1a2e; line-height: 1; font-family: Georgia, serif; }
-.stat-lbl  { font-size: 0.75rem; color: #888; margin-top: 2px; }
-
-/* ─────────────────────────────
+/* ═══════════════════════════════════════
    SERVICES
-───────────────────────────── */
-.services { background: #fff; padding: 5rem 0; }
-.services-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
-.sec-top {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 2.75rem; gap: 1rem; flex-wrap: wrap;
+═══════════════════════════════════════ */
+.services {
+  background: var(--white);
+  padding: 100px 0;
 }
-.sec-eyebrow {
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-  color: #7c4dcc; margin-bottom: 0.5rem;
+.services-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.services-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
-.sec-top h2 {
-  font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 800;
-  letter-spacing: -0.02em; line-height: 1.2; color: #1a1a2e;
+.services-top h2 { margin-bottom: 6px; }
+.view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--purple);
+  letter-spacing: .04em;
+  white-space: nowrap;
+  transition: gap var(--transition);
 }
-.sec-top h2 em { font-style: italic; color: #7c4dcc; }
-.view-all-link {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-  color: #555; white-space: nowrap;
-  transition: color 0.2s;
+.view-all:hover { gap: 10px; }
+.view-all svg { width: 16px; height: 16px; }
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
 }
-.view-all-link:hover { color: #7c4dcc; }
-.view-all-link svg { width: 18px; height: 18px; }
-
-.svc-row { display: grid; grid-template-columns: repeat(6,1fr); gap: 0; }
 .svc-card {
-  padding: 1.75rem 1.25rem 1.5rem;
-  border: 1px solid #ede8f8; border-left: none;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem;
-  transition: background 0.2s;
+  background: var(--white);
+  border: 1px solid #EEE8FF;
+  border-radius: 20px;
+  padding: 30px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  position: relative;
+  overflow: hidden;
 }
-.svc-card:first-child { border-left: 1px solid #ede8f8; }
-.svc-card:hover { background: #faf7ff; }
-.svc-card-icon { color: #7c4dcc; margin-bottom: 0.3rem; }
-.svc-card-icon svg { width: 36px; height: 36px; stroke-width: 1.4; }
-.svc-card h3 { font-size: 0.82rem; font-weight: 700; color: #1a1a2e; line-height: 1.3; }
-.svc-card p  { font-size: 0.73rem; color: #777; line-height: 1.55; flex: 1; }
-.svc-arrow { color: #7c4dcc; margin-top: 0.5rem; }
-.svc-arrow svg { width: 18px; height: 18px; }
-
-/* ─────────────────────────────
-   CTA BANNER
-───────────────────────────── */
-.cta {
-  background: linear-gradient(105deg, #5a2d9a 0%, #7c4dcc 45%, #4a1a8a 100%);
-  padding: 3.5rem 2rem;
-  position: relative; overflow: hidden;
+.svc-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--g-cta);
+  opacity: 0;
+  transition: opacity var(--transition);
 }
-.cta-inner {
-  max-width: 1280px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+.svc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  background: var(--lav-white);
 }
-/* Glowing tooth */
-.cta-tooth {
-  flex-shrink: 0; position: relative; width: 120px; height: 120px;
+.svc-card:hover::before { opacity: 1; }
+.svc-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: var(--lav-pale);
   display: flex; align-items: center; justify-content: center;
+  margin-bottom: 4px;
+  transition: background var(--transition), box-shadow var(--transition);
 }
-.cta-tooth-glow {
-  position: absolute; inset: -30px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(180,120,255,0.5) 0%, rgba(120,60,220,0.2) 40%, transparent 70%);
-  animation: pulse 2.5s ease-in-out infinite;
+.svc-card:hover .svc-icon {
+  background: linear-gradient(135deg, var(--lav-pale), #ddd3ff);
+  box-shadow: 0 4px 18px rgba(105,52,217,.18);
 }
-@keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.12); opacity: 1; } }
-.cta-tooth svg { width: 72px; height: 72px; position: relative; z-index: 1; filter: drop-shadow(0 0 18px rgba(200,150,255,0.7)); }
-/* Sparkles */
-.cta-tooth::before {
-  content: '✦';
-  position: absolute; top: 2px; right: 4px;
-  font-size: 1rem; color: rgba(255,255,255,0.7);
-  animation: sparkle 2s ease-in-out infinite 0.5s;
+.svc-icon svg { width: 24px; height: 24px; color: var(--purple); stroke-width: 1.6; }
+.svc-card h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.25;
+  letter-spacing: -.01em;
 }
-.cta-tooth::after {
-  content: '✦';
-  position: absolute; bottom: 8px; left: 0;
-  font-size: 0.6rem; color: rgba(255,255,255,0.5);
-  animation: sparkle 2s ease-in-out infinite 1s;
+.svc-card p { font-size: 13px; color: #5D6490; line-height: 1.6; flex: 1; }
+.svc-arrow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--purple);
+  margin-top: 8px;
+  transition: gap var(--transition);
 }
-@keyframes sparkle { 0%,100% { opacity: 0.4; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+.svc-arrow svg { width: 14px; height: 14px; transition: transform var(--transition); }
+.svc-card:hover .svc-arrow { gap: 8px; }
+.svc-card:hover .svc-arrow svg { transform: translateX(4px); }
 
-.cta-text { flex: 1; }
-.cta-text h2 {
-  font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 900;
-  color: #fff; margin-bottom: 0.4rem; letter-spacing: -0.02em;
+/* ═══════════════════════════════════════
+   CTA BANNER
+═══════════════════════════════════════ */
+.cta-strip {
+  padding: 0 var(--pad-x) 100px;
+  max-width: calc(var(--max-w) + var(--pad-x)*2);
+  margin: 0 auto;
 }
-.cta-text p { font-size: 0.85rem; color: rgba(255,255,255,0.72); max-width: 46ch; }
-.cta-right { display: flex; flex-direction: column; gap: 0.85rem; align-items: flex-end; flex-shrink: 0; }
-.btn-cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: #fff; color: #5a2d9a;
-  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 0.85rem 1.6rem; border-radius: 6px; white-space: nowrap;
-  transition: background 0.2s, transform 0.15s;
+.cta-banner {
+  background: var(--g-banner);
+  border-radius: 28px;
+  padding: 0 60px;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
 }
-.btn-cta:hover { background: #ede8f8; transform: translateY(-1px); }
-.btn-cta svg { width: 14px; height: 14px; }
-.cta-phone { display: flex; align-items: center; gap: 0.6rem; }
-.cta-phone svg { width: 18px; height: 18px; color: rgba(255,255,255,0.8); }
-.cta-phone span { font-size: 0.95rem; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+/* Soft glow blobs inside banner */
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 120px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,140,255,.18), transparent 65%);
+  pointer-events: none;
+}
+.cta-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; right: 200px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(160,90,255,.12), transparent 65%);
+  pointer-events: none;
+}
+/* Tooth graphic */
+.cta-tooth-area {
+  flex-shrink: 0;
+  width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.cta-glow {
+  position: absolute;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,150,255,.55), transparent 65%);
+  animation: glowPulse 2.8s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100% { transform: scale(1); opacity:.7; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+.cta-tooth-svg { position: relative; z-index: 1; filter: drop-shadow(0 0 24px rgba(200,150,255,.8)); }
+.cta-text-area { flex: 1; }
+.cta-text-area h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.025em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.cta-text-area p { font-size: 15px; color: rgba(255,255,255,.7); max-width: 50ch; line-height: 1.6; }
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #fff;
+  color: var(--purple-deep);
+  font-family: 'Manrope', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  padding: 0 28px;
+  height: 50px;
+  border-radius: 25px;
+  white-space: nowrap;
+  box-shadow: 0 8px 28px rgba(0,0,0,.18);
+  transition: opacity var(--transition), transform var(--transition);
+}
+.btn-white:hover { opacity: .94; transform: translateY(-2px); }
+.btn-white svg { width: 15px; height: 15px; }
+.cta-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,.85);
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+.cta-phone svg { width: 16px; height: 16px; opacity: .8; }
 
-/* ─────────────────────────────
+/* ═══════════════════════════════════════
+   FAQ
+═══════════════════════════════════════ */
+.faq { background: var(--lav-white); padding: 100px 0; }
+.faq-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.faq-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.faq-copy { position: sticky; top: 110px; }
+.faq-copy h2 { font-family:'Manrope',sans-serif; font-size: clamp(28px,2.8vw,40px); font-weight:800; letter-spacing:-.03em; line-height:1.15; color:var(--navy); margin-bottom:16px; }
+.faq-copy p { font-size:16px; color:#4B5280; line-height:1.72; margin-bottom:28px; }
+.faq-list { display:flex; flex-direction:column; gap:12px; }
+.faq-item {
+  background: var(--white);
+  border: 1px solid rgba(201,184,255,.3);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(76,44,150,.04);
+}
+.faq-q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--transition);
+}
+.faq-q:hover { color: var(--purple); }
+.faq-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--lav-pale);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition), transform var(--transition);
+}
+.faq-icon svg { width: 14px; height: 14px; color: var(--purple); transition: transform .3s; }
+.faq-item.open .faq-icon { background: var(--purple); }
+.faq-item.open .faq-icon svg { color:#fff; transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .4s ease, padding .3s ease;
+  font-size: 14.5px;
+  color: #5D6490;
+  line-height: 1.7;
+  padding: 0 24px;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 24px 20px; }
+
+/* ═══════════════════════════════════════
+   LOCATION
+═══════════════════════════════════════ */
+.location { background: var(--white); padding: 100px 0; }
+.location-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.location-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:60px; align-items:center; }
+.location-copy h2 { font-family:'Manrope',sans-serif; font-size:clamp(28px,2.8vw,42px); font-weight:800; letter-spacing:-.03em; line-height:1.15; color:var(--navy); margin-bottom:18px; }
+.location-copy p { font-size:16px; color:#4B5280; line-height:1.72; margin-bottom:32px; }
+.contact-list { display:flex; flex-direction:column; gap:14px; margin-bottom:32px; }
+.contact-row {
+  display:flex; align-items:center; gap:14px;
+  padding:16px 20px;
+  background: var(--lav-white);
+  border-radius:14px;
+  border: 1px solid rgba(201,184,255,.25);
+}
+.contact-row-icon {
+  width:40px; height:40px;
+  border-radius:11px;
+  background: var(--lav-pale);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.contact-row-icon svg { width:18px; height:18px; color:var(--purple); stroke-width:1.75; }
+.contact-row-text { line-height:1.3; }
+.contact-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#8B96C8; }
+.contact-value { font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; color:var(--navy); }
+/* Map placeholder */
+.map-wrap {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(76,44,150,.1);
+  aspect-ratio:16/10;
+  background: var(--lav-mist);
+  position: relative;
+  display:flex; align-items:center; justify-content:center;
+}
+.map-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+.map-placeholder {
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+  color:#8B96C8; font-family:'Manrope',sans-serif; font-size:14px; font-weight:600;
+}
+.map-placeholder svg { width:40px; height:40px; opacity:.5; }
+
+/* ═══════════════════════════════════════
    FOOTER
-───────────────────────────── */
-.footer { background: #120828; padding: 4rem 0 2rem; }
-.footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
-.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-.footer-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
-.footer-logo svg { width: 30px; height: 30px; color: #7c4dcc; }
-.footer-logo-name { font-size: 0.88rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.2; }
-.footer-logo-sub { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: #7c4dcc; }
-.footer p { font-size: 0.78rem; color: rgba(255,255,255,0.38); line-height: 1.75; max-width: 28ch; }
-.footer h5 { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.32); margin-bottom: 1rem; }
-.footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.footer ul a { font-size: 0.8rem; color: rgba(255,255,255,0.5); transition: color 0.2s; }
-.footer ul a:hover { color: #a67de8; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-.footer-bottom span { font-size: 0.72rem; color: rgba(255,255,255,0.25); }
-
-/* ─────────────────────────────
-   RESPONSIVE
-───────────────────────────── */
-@media (max-width: 1024px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-left { padding: 3rem 2rem; max-width: 100%; }
-  .hero-right { height: 55vw; min-height: 320px; }
-  .svc-row { grid-template-columns: repeat(3,1fr); }
-  .svc-card { border-left: 1px solid #ede8f8; }
-  .about-inner { grid-template-columns: 1fr 1fr; }
-  .about-stats { grid-column: 1/-1; flex-direction: row; justify-content: space-around; }
-  .stat-row { flex-direction: column; align-items: center; text-align: center; border-bottom: none; border-right: 1px solid #e8e0f5; padding: 0 2rem; }
-  .stat-row:last-child { border-right: none; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+═══════════════════════════════════════ */
+.footer { background: #0C1030; padding: 70px 0 32px; }
+.footer-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
 }
-@media (max-width: 768px) {
-  .features-card { grid-template-columns: 1fr 1fr; }
-  .feat:nth-child(2) { border-right: none; }
-  .feat { border-bottom: 1px solid #ede8f8; }
-  .feat:nth-child(3) { border-right: 1px solid #ede8f8; border-bottom: none; }
-  .feat:nth-child(4) { border-right: none; border-bottom: none; }
-  .about-inner { grid-template-columns: 1fr; }
-  .about-stats { flex-direction: column; }
-  .stat-row { flex-direction: row; border-right: none; border-bottom: 1px solid #e8e0f5; }
-  .nav-links { display: none; }
-  .svc-row { grid-template-columns: repeat(2,1fr); }
-  .cta-inner { flex-direction: column; align-items: flex-start; }
-  .cta-right { align-items: flex-start; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+.footer-logo { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+.footer-logo svg { width:34px; height:34px; }
+.footer-brand-name { font-family:'Manrope',sans-serif; font-size:14px; font-weight:800; color:#fff; letter-spacing:-.01em; line-height:1.2; }
+.footer-brand-sub { font-size:12px; color:var(--lav-soft); font-weight:500; }
+.footer-desc { font-size:14px; color:rgba(255,255,255,.38); line-height:1.75; max-width:30ch; margin-bottom:24px; }
+.footer-socials { display:flex; gap:10px; }
+.footer-social {
+  width:36px; height:36px;
+  border-radius:9px;
+  background: rgba(255,255,255,.07);
+  display:flex; align-items:center; justify-content:center;
+  border: 1px solid rgba(255,255,255,.1);
+  transition: background var(--transition), border-color var(--transition);
+}
+.footer-social:hover { background:rgba(105,52,217,.4); border-color:var(--purple-el); }
+.footer-social svg { width:16px; height:16px; color:rgba(255,255,255,.6); }
+.footer-col h5 {
+  font-family:'Manrope',sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(255,255,255,.28);
+  margin-bottom:20px;
+}
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.footer-col ul a { font-size:14px; color:rgba(255,255,255,.46); transition:color var(--transition); }
+.footer-col ul a:hover { color: var(--lav-soft); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding-top: 28px;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+}
+.footer-bottom span { font-size:13px; color:rgba(255,255,255,.22); }
+.footer-bottom a { color:rgba(255,255,255,.22); transition:color var(--transition); }
+.footer-bottom a:hover { color:rgba(255,255,255,.5); }
+
+/* ═══════════════════════════════════════
+   MOBILE STICKY BAR
+═══════════════════════════════════════ */
+.mobile-bar {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(201,184,255,.25);
+  box-shadow: 0 -8px 28px rgba(76,44,150,.09);
+  z-index: 300;
+  align-items: center;
+  justify-content: stretch;
+  gap: 12px;
+  padding: 0 20px;
+}
+.mobile-bar a {
+  flex: 1;
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  font-family:'Manrope',sans-serif; font-size:13px; font-weight:700;
+  height:44px; border-radius:22px;
+}
+.mobile-bar .mb-call {
+  border: 1.5px solid #DDD5F8;
+  color: var(--purple);
+}
+.mobile-bar .mb-book {
+  background: var(--g-cta);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(87,39,199,.3);
+}
+.mobile-bar svg { width:14px; height:14px; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 1100px) {
+  :root { --pad-x: 36px; }
+  .svc-grid { grid-template-columns: repeat(3,1fr); }
+  .about-inner { grid-template-columns: 1fr 1fr; }
+  .about-cards { grid-column: 1/-1; flex-direction:row; }
+  .about-card { flex:1; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width: 860px) {
+  :root { --pad-x: 28px; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; min-height:auto; }
+  .hero-left { padding: 60px var(--pad-x) 40px; }
+  .hero-right { height: 60vw; min-height: 280px; }
+  .features-card { grid-template-columns:1fr 1fr; }
+  .feat-col:nth-child(2) { border-right:none; }
+  .feat-col { border-bottom:1px solid rgba(201,184,255,.28); }
+  .feat-col:nth-child(3) { border-right:1px solid rgba(201,184,255,.28); border-bottom:none; }
+  .feat-col:nth-child(4) { border-right:none; border-bottom:none; }
+  .about-inner { grid-template-columns:1fr; }
+  .about-cards { flex-direction:column; }
+  .svc-grid { grid-template-columns:repeat(2,1fr); }
+  .cta-banner { flex-wrap:wrap; height:auto; padding:36px 36px; border-radius:20px; }
+  .cta-tooth-area { display:none; }
+  .cta-actions { align-items:flex-start; }
+  .faq-layout { grid-template-columns:1fr; gap:40px; }
+  .faq-copy { position:static; }
+  .location-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  .mobile-bar { display:flex; }
+  body { padding-bottom:64px; }
+  .header-inner { height:74px; }
+}
+@media (max-width: 560px) {
+  :root { --pad-x: 20px; }
+  .hero-h1 { font-size: 36px; }
+  .svc-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr; }
+  .features-card { grid-template-columns:1fr; }
+  .feat-col { border-right:none !important; }
+  .about-cards { flex-direction:column; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══ NAV ══ -->
-<nav class="nav">
-  <div class="nav-wrap">
-    <a href="#home" class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M24 6C18.5 6 14 10.5 14 16c0 3.2 1.3 6 3.4 8L19 30l1.8 9h6.4l1.8-9 1.6-6C32.7 22 34 19.2 34 16c0-5.5-4.5-10-10-10z"/>
-        </svg>
-      </div>
+<!-- ══════════════════════════════════
+     HEADER
+══════════════════════════════════ -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <!-- Logo -->
+    <a href="#inicio" class="logo">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 5C15.6 5 12 8.6 12 13c0 2.6 1.1 4.9 2.9 6.5l1.5 4.8.6 3.5.5 5.2h5l.5-5.2.6-3.5 1.5-4.8A8 8 0 0028 13c0-4.4-3.6-8-8-8z" stroke="url(#lg1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16 12.5c1-.8 2.4-1 4-1s3 .2 4 1" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="lg1" x1="12" y1="5" x2="28" y2="34" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#5727C7"/>
+            <stop offset="1" stop-color="#A442E8"/>
+          </linearGradient>
+        </defs>
+      </svg>
       <div class="logo-text">
-        <div class="logo-name">D.ª Debbie Costa</div>
-        <div class="logo-sub">Dental</div>
+        <span class="logo-name">Clínica Dentária</span>
+        <span class="logo-sub">Debbie Costa</span>
       </div>
     </a>
+    <!-- Nav -->
     <ul class="nav-links">
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#location">Location</a></li>
-      <li><a href="#contact">Patients</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#inicio" class="active">Início</a></li>
+      <li><a href="#clinica">A Clínica</a></li>
+      <li><a href="#tratamentos">Tratamentos</a></li>
+      <li><a href="#saude-oral">Saúde Oral</a></li>
+      <li><a href="#pacientes">Pacientes</a></li>
+      <li><a href="#contactos">Contactos</a></li>
     </ul>
-    <a href="#contact" class="nav-book">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      Book Appointment
+    <!-- Book -->
+    <a href="#contactos" class="btn-book">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Marcar Consulta
     </a>
   </div>
-</nav>
+</header>
 
-<!-- ══ HERO ══ -->
-<section class="hero" id="home">
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hero" id="inicio">
   <!-- Left -->
   <div class="hero-left">
-    <p class="hero-eyebrow">Modern Care. Brighter Smiles.</p>
-    <h1>Where Advanced<br>Dentistry Meets<br><span class="purple">Beautiful Results.</span></h1>
-    <p class="hero-desc">Experience the perfect blend of professional care, compassion, and personalised treatment for your whole family.</p>
+    <span class="hero-eyebrow">Cuidados modernos · Sorrisos com confiança</span>
+    <h1 class="hero-h1">
+      Onde o cuidado moderno<br>
+      encontra o seu<br>
+      <span class="gradient-text">melhor sorriso.</span>
+    </h1>
+    <p class="hero-desc">
+      Na Clínica Dentária Debbie Costa, aliamos atenção próxima, cuidados personalizados e diferentes áreas da Medicina Dentária para acompanhar a saúde do seu sorriso.
+    </p>
     <div class="hero-btns">
-      <a href="#contact" class="btn-primary">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        Book Appointment
+      <a href="#contactos" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Marcar Consulta
       </a>
-      <a href="#about" class="btn-outline">
-        <span class="play-circle">
-          <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="2,1 9,5 2,9"/></svg>
-        </span>
-        Watch Video
+      <a href="#clinica" class="btn-secondary">
+        Conhecer a Clínica
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
     <div class="hero-trust">
       <div class="trust-avatars">
-        <span>JC</span><span>ML</span><span>AP</span><span>RS</span>
+        <span>FC</span><span>ML</span><span>AR</span><span>JB</span>
       </div>
-      <div class="trust-text">
-        <div class="trust-label">Trusted by Faial's families for years</div>
-        <div class="trust-stars">
-          <svg viewBox="0 0 24 24" fill="#f5a623"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
-          <svg viewBox="0 0 24 24" fill="#f5a623"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
-          <svg viewBox="0 0 24 24" fill="#f5a623"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
-          <svg viewBox="0 0 24 24" fill="#f5a623"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
-          <svg viewBox="0 0 24 24" fill="#f5a623" opacity="0.35"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
-          <span class="rating">4.9/5</span>
-        </div>
+      <div class="trust-info">
+        <div class="trust-main">Cuidado de proximidade em Faial</div>
+        <div class="trust-sub">Acompanhamento personalizado · Cedros, Açores</div>
       </div>
     </div>
   </div>
-  <!-- Right – full bleed image -->
+  <!-- Right image -->
   <div class="hero-right">
-    <video autoplay muted loop playsinline class="hero-img" poster="assets/images/clinic-interior.jpg">
-      <source src="assets/videos/hero.mp4" type="video/mp4">
-    </video>
-    <img src="assets/images/clinic-interior.jpg" alt="Dental clinic" class="hero-img">
+    <div class="hero-img-wrap">
+      <video autoplay muted loop playsinline poster="assets/images/clinic-interior.jpg">
+        <source src="assets/videos/hero.mp4" type="video/mp4">
+      </video>
+      <img src="assets/images/clinic-interior.jpg" alt="Clínica Dentária Debbie Costa — ambiente clínico moderno">
+    </div>
   </div>
 </section>
 
-<!-- ══ FEATURES STRIP ══ -->
-<div class="features-wrap">
-  <div class="features-card">
-    <div class="feat">
-      <div class="feat-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3C9.2 3 7 5.2 7 8c0 1.5.5 2.8 1.4 3.8L9.5 15l.7 4h3.6l.7-4 1.1-3.2C16.5 10.8 17 9.5 17 8c0-2.8-2.2-5-5-5z"/></svg>
+<!-- ══════════════════════════════════
+     FEATURE PANEL
+══════════════════════════════════ -->
+<div class="features-zone">
+  <div class="features-panel">
+    <div class="features-card reveal">
+      <div class="feat-col">
+        <div class="feat-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="feat-title">Cuidado Personalizado</div>
+        <div class="feat-desc">Acompanhamento pensado de acordo com as necessidades de cada paciente.</div>
       </div>
-      <h3>Advanced Technology</h3>
-      <p>State-of-the-art equipment for precise, painless, and predictable results.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      <div class="feat-col">
+        <div class="feat-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="feat-title">Diferentes Áreas de Cuidado</div>
+        <div class="feat-desc">Medicina Dentária Geral, Cirurgia Oral, Periodontologia, Prostodontia e Ortodontia.</div>
       </div>
-      <h3>Comfort First</h3>
-      <p>Relax in our welcoming environment designed to put you at ease.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+      <div class="feat-col">
+        <div class="feat-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="feat-title">Comunicação Clara</div>
+        <div class="feat-desc">Orientação simples e próxima para compreender cada etapa dos seus cuidados.</div>
       </div>
-      <h3>Expert Team</h3>
-      <p>Highly skilled professionals committed to your oral health and confidence.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+      <div class="feat-col">
+        <div class="feat-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="feat-title">Atendimento de Proximidade</div>
+        <div class="feat-desc">Um espaço de saúde oral próximo da comunidade de Cedros e Faial.</div>
       </div>
-      <h3>Personalised Care</h3>
-      <p>Tailored treatment plans that match your goals, needs, and lifestyle.</p>
     </div>
   </div>
 </div>
 
-<!-- ══ ABOUT ══ -->
-<section class="about" id="about">
+<!-- ══════════════════════════════════
+     ABOUT
+══════════════════════════════════ -->
+<section class="about" id="clinica">
   <div class="about-inner">
-    <!-- Text -->
-    <div class="about-text">
-      <p class="about-eyebrow">About the Clinic</p>
-      <h2>Elevating Care.<br><span class="purple">Enhancing Lives.</span></h2>
-      <p>We combine professional excellence with compassion to create exceptional dental experiences that transform your smile — and your life. Serving Faial Island for over 15 years.</p>
-      <a href="#contact" class="btn-learn-more">
-        Learn More
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <!-- Left -->
+    <div class="about-copy reveal">
+      <span class="eyebrow">A Clínica</span>
+      <div class="section-head">
+        <h2>Cuidar melhor.<br><span class="gradient-text">Viver com mais confiança.</span></h2>
+      </div>
+      <p>Na Clínica Dentária Debbie Costa, acreditamos que uma boa experiência começa com atenção, clareza e um acompanhamento adaptado às necessidades de cada pessoa.</p>
+      <a href="#contactos" class="btn-outline-purple">
+        Conhecer a Clínica
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <!-- Video -->
-    <div class="about-video">
-      <video autoplay muted loop playsinline poster="assets/images/clinic-interior.jpg">
+    <!-- Center image -->
+    <div class="about-img-wrap reveal reveal-delay-1">
+      <video autoplay muted loop playsinline poster="assets/images/reception.jpg">
         <source src="assets/videos/about-video.mp4" type="video/mp4">
       </video>
-      <img src="assets/images/clinic-interior.jpg" alt="Clinic" class="about-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-      <div class="about-video-overlay">
-        <div class="play-btn-lg">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-      </div>
-      <div class="about-video-tag">Clínica Dentária D.ª Debbie Costa</div>
+      <img src="assets/images/reception.jpg" alt="Interior da Clínica Dentária Debbie Costa">
     </div>
-    <!-- Stats -->
-    <div class="about-stats">
-      <div class="stat-row">
-        <div class="stat-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    <!-- Right cards -->
+    <div class="about-cards">
+      <div class="about-card reveal reveal-delay-1">
+        <div class="about-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
         </div>
-        <div>
-          <div class="stat-num">15+</div>
-          <div class="stat-lbl">Years of Excellence</div>
-        </div>
+        <h4>Atendimento Próximo</h4>
+        <p>Acompanhamento com atenção às necessidades individuais de cada paciente.</p>
       </div>
-      <div class="stat-row">
-        <div class="stat-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      <div class="about-card reveal reveal-delay-2">
+        <div class="about-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M9 12l2 2 4-4M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <div>
-          <div class="stat-num">Faial</div>
-          <div class="stat-lbl">Island Community</div>
-        </div>
+        <h4>Cuidado Personalizado</h4>
+        <p>Orientação adequada após avaliação clínica individual.</p>
       </div>
-      <div class="stat-row">
-        <div class="stat-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div class="about-card reveal reveal-delay-3">
+        <div class="about-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
         </div>
-        <div>
-          <div class="stat-num">100%</div>
-          <div class="stat-lbl">Safety &amp; Sterilisation</div>
-        </div>
+        <h4>Saúde Oral Integrada</h4>
+        <p>Diferentes áreas de cuidados em Medicina Dentária num só espaço.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ SERVICES ══ -->
-<section class="services" id="services">
+<!-- ══════════════════════════════════
+     SERVICES
+══════════════════════════════════ -->
+<section class="services" id="tratamentos">
   <div class="services-inner">
-    <div class="sec-top">
+    <div class="services-top reveal">
       <div>
-        <p class="sec-eyebrow">Our Services</p>
-        <h2>Comprehensive Dental Care for <em>Every Stage of Life</em></h2>
+        <span class="eyebrow">Tratamentos</span>
+        <h2 class="section-head" style="font-family:'Manrope',sans-serif;font-size:clamp(28px,2.8vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--navy);">
+          Cuidados dentários para <span class="gradient-text">diferentes necessidades</span><br>do seu sorriso.
+        </h2>
       </div>
-      <a href="#contact" class="view-all-link">
-        View All Services
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8l4 4-4 4M8 12h8"/></svg>
+      <a href="#contactos" class="view-all">
+        Ver todos os tratamentos
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="svc-row">
-      <div class="svc-card">
-        <div class="svc-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3C9.2 3 7 5.2 7 8c0 1.5.5 2.8 1.4 3.8L9.5 15l.7 4h3.6l.7-4 1.1-3.2C16.5 10.8 17 9.5 17 8c0-2.8-2.2-5-5-5z"/><path d="M9 8h6"/></svg>
+    <div class="svc-grid">
+      <div class="svc-card reveal">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4C9.2 4 7 6.2 7 9c0 1.8.8 3.3 2.1 4.3L10 16l.7 3.5h2.6l.7-3.5.9-2.7A5 5 0 0017 9c0-2.8-2.2-5-5-5z"/><path d="M9.5 9h5"/></svg>
         </div>
-        <h3>Preventive Care</h3>
-        <p>Exams, cleanings, and screenings to keep your smile healthy.</p>
-        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Consulta de Medicina Dentária</h3>
+        <p>Avaliação, diagnóstico e acompanhamento clínico personalizado da sua saúde oral.</p>
+        <div class="svc-arrow">
+          Saber mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3C9.2 3 7 5.2 7 8c0 1.5.5 2.8 1.4 3.8L9.5 15l.7 4h3.6l.7-4 1.1-3.2C16.5 10.8 17 9.5 17 8c0-2.8-2.2-5-5-5z"/><path d="M16 3l2-1M18 6l1-2M19 9h2M16 11l2 1"/></svg>
+      <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
         </div>
-        <h3>Cosmetic Dentistry</h3>
-        <p>Whitening, veneers, bonding, and smile makeovers to enhance your beauty.</p>
-        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Cirurgia Oral</h3>
+        <p>Procedimentos cirúrgicos realizados com segurança, cuidado e conforto para o paciente.</p>
+        <div class="svc-arrow">
+          Saber mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3C9.2 3 7 5.2 7 8c0 1.5.5 2.8 1.4 3.8L9.5 15l.7 4h3.6l.7-4 1.1-3.2C16.5 10.8 17 9.5 17 8c0-2.8-2.2-5-5-5z"/></svg>
+      <div class="svc-card reveal reveal-delay-2">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </div>
-        <h3>Restorative Dentistry</h3>
-        <p>Fillings, crowns, bridges, and more to restore function and confidence.</p>
-        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Periodontologia</h3>
+        <p>Cuidados especializados para a saúde das gengivas e dos tecidos de suporte dentário.</p>
+        <div class="svc-arrow">
+          Saber mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="9" width="18" height="3" rx="1.5"/><rect x="6" y="6" width="2" height="3"/><rect x="11" y="6" width="2" height="3"/><rect x="16" y="6" width="2" height="3"/><path d="M5 12v5a2 2 0 002 2h10a2 2 0 002-2v-5"/></svg>
+      <div class="svc-card reveal reveal-delay-3">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="2"/><path d="M5 12v5a2 2 0 002 2h10a2 2 0 002-2v-5"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
         </div>
-        <h3>Scaling &amp; Cleaning</h3>
-        <p>Braces and clear aligners for a straighter, healthier smile.</p>
-        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Prostodontia</h3>
+        <p>Reabilitação oral com próteses e restaurações para recuperar função e estética.</p>
+        <div class="svc-arrow">
+          Saber mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><path d="M8 9c0-2.2 1.8-4 4-4s4 1.8 4 4v6c0 2.2-1.8 4-4 4s-4-1.8-4-4V9z"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
+      <div class="svc-card reveal reveal-delay-4">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
         </div>
-        <h3>Prosthetics</h3>
-        <p>Permanent, natural-looking solutions for missing teeth.</p>
-        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Ortodontia</h3>
+        <p>Avaliação e acompanhamento de alterações no posicionamento dentário e na mordida.</p>
+        <div class="svc-arrow">
+          Saber mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
       </div>
-      <div class="svc-card">
-        <div class="svc-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div class="svc-card reveal reveal-delay-4">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
         </div>
-        <h3>Emergency Care</h3>
-        <p>Prompt care when you need it most.</p>
-        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Avaliação de Saúde Oral</h3>
+        <p>Consulta inicial para avaliar a sua saúde oral e planear o acompanhamento mais adequado.</p>
+        <div class="svc-arrow">
+          Saber mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ CTA BANNER ══ -->
-<div class="cta" id="contact">
-  <div class="cta-inner">
-    <div class="cta-tooth">
-      <div class="cta-tooth-glow"></div>
-      <svg viewBox="0 0 48 48" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M24 6C18.5 6 14 10.5 14 16c0 3.2 1.3 6 3.4 8L19 30l1.8 9h6.4l1.8-9 1.6-6C32.7 22 34 19.2 34 16c0-5.5-4.5-10-10-10z"/>
+<!-- ══════════════════════════════════
+     CTA BANNER
+══════════════════════════════════ -->
+<div class="cta-strip" id="contactos">
+  <div class="cta-banner reveal">
+    <!-- Tooth visual -->
+    <div class="cta-tooth-area">
+      <div class="cta-glow"></div>
+      <svg class="cta-tooth-svg" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 8C29.5 8 21 16.5 21 27c0 6.3 2.8 11.8 7.1 15.4l3.2 9.6 1.4 8.5 1.2 11.5h12.2l1.2-11.5 1.4-8.5 3.2-9.6A18.9 18.9 0 0059 27c0-10.5-8.5-19-19-19z" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M31 26c2.5-2 5.5-2.8 9-2.8s6.5.8 9 2.8" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="63" cy="14" r="3" fill="rgba(200,150,255,0.7)"/>
+        <circle cx="18" cy="22" r="2" fill="rgba(200,150,255,0.5)"/>
+        <circle cx="66" cy="36" r="1.5" fill="rgba(255,255,255,0.5)"/>
       </svg>
     </div>
-    <div class="cta-text">
-      <h2>A Brighter, Healthier Smile<br>Starts Here.</h2>
-      <p>Schedule your appointment today and take the first step towards a confident you.</p>
+    <!-- Text -->
+    <div class="cta-text-area">
+      <h2>Um sorriso mais saudável começa<br>com o primeiro passo.</h2>
+      <p>Entre em contacto para solicitar a sua consulta e esclarecer as suas dúvidas.</p>
     </div>
-    <div class="cta-right">
-      <a href="#contact" class="btn-cta">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        Book Appointment
+    <!-- Actions -->
+    <div class="cta-actions">
+      <a href="mailto:clinicadentariadebbiecosta@hotmail.com" class="btn-white">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Marcar Consulta
       </a>
       <div class="cta-phone">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.06 6.06l1.27-.74a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 17z"/></svg>
-        <span>292 946 800</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.06 6.06l1.27-.74a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.92z"/></svg>
+        +351 292 946 800
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ FOOTER ══ -->
-<footer class="footer" id="location">
+<!-- ══════════════════════════════════
+     FAQ
+══════════════════════════════════ -->
+<section class="faq" id="saude-oral">
+  <div class="faq-inner">
+    <div class="faq-layout">
+      <div class="faq-copy reveal">
+        <span class="eyebrow">Perguntas Frequentes</span>
+        <h2>Tudo o que precisa de saber antes da sua consulta.</h2>
+        <p>Aqui encontra respostas às questões mais comuns sobre os nossos cuidados e o que esperar na sua primeira visita.</p>
+        <a href="#contactos" class="btn-outline-purple">
+          Contactar a clínica
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="faq-list reveal reveal-delay-1">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Como posso marcar uma consulta?
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-a">Pode contactar-nos por telefone (+351 292 946 800), por e-mail (clinicadentariadebbiecosta@hotmail.com) ou presencialmente na clínica em Cedros, Faial.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            O que devo levar para a primeira consulta?
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-a">Traga o seu cartão de cidadão, cartão de saúde e, se tiver, exames ou registos de consultas dentárias anteriores. Na primeira visita, realizaremos uma avaliação completa da sua saúde oral.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Que áreas de Medicina Dentária estão disponíveis?
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-a">A clínica oferece Medicina Dentária Geral, Cirurgia Oral, Periodontologia, Prostodontia e Ortodontia — cobrindo um vasto conjunto de necessidades de saúde oral.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            A clínica atende crianças e famílias?
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-a">Sim. Acompanhamos pacientes de todas as idades, com especial atenção às necessidades de cada fase da vida — desde a primeira infância até à idade adulta.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Onde fica a clínica?
+            <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-a">Estamos localizados na Estrada Regional, nº 4-A R/C, Cedros, Faial, Açores, Portugal. Servimos a comunidade de Cedros e toda a ilha do Faial.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     LOCATION
+══════════════════════════════════ -->
+<section class="location" id="pacientes">
+  <div class="location-inner">
+    <div class="location-grid">
+      <div class="location-copy reveal">
+        <span class="eyebrow">Localização &amp; Contacto</span>
+        <h2>Estamos em Cedros,<br>Faial — <span class="gradient-text">perto de si.</span></h2>
+        <p>A Clínica Dentária Debbie Costa serve a comunidade de Cedros e toda a ilha do Faial, com cuidados de saúde oral acessíveis e próximos.</p>
+        <div class="contact-list">
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="contact-row-text">
+              <div class="contact-label">Endereço</div>
+              <div class="contact-value">Estrada Regional, nº 4-A R/C, Cedros, Faial, Açores</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 012 4.18 2 2 0 014 2h3a2 2 0 012 1.72c.127.96.361 1.9.7 2.81a2 2 0 01-.45 2.11L8.91 9.91a16 16 0 006.06 6.06l1.27-.74a2 2 0 012.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0122 17z"/></svg>
+            </div>
+            <div class="contact-row-text">
+              <div class="contact-label">Telefone</div>
+              <div class="contact-value">+351 292 946 800</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-row-text">
+              <div class="contact-label">E-mail</div>
+              <div class="contact-value">clinicadentariadebbiecosta@hotmail.com</div>
+            </div>
+          </div>
+        </div>
+        <a href="tel:+351292946800" class="btn-primary" style="width:fit-content;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 012 4.18 2 2 0 014 2h3a2 2 0 012 1.72c.127.96.361 1.9.7 2.81a2 2 0 01-.45 2.11L8.91 9.91a16 16 0 006.06 6.06l1.27-.74a2 2 0 012.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0122 17z"/></svg>
+          Ligar agora
+        </a>
+      </div>
+      <div class="map-wrap reveal reveal-delay-1">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.0!2d-28.683!3d38.602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQ2Vkcm9zLCBGYWlhbA!5e0!3m2!1spt!2spt!4v1"
+          allowfullscreen="" loading="lazy"
+          title="Localização da Clínica Dentária Debbie Costa">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer class="footer">
   <div class="footer-inner">
     <div class="footer-grid">
       <div>
         <div class="footer-logo">
-          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M24 6C18.5 6 14 10.5 14 16c0 3.2 1.3 6 3.4 8L19 30l1.8 9h6.4l1.8-9 1.6-6C32.7 22 34 19.2 34 16c0-5.5-4.5-10-10-10z"/></svg>
+          <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+            <path d="M20 5C15.6 5 12 8.6 12 13c0 2.6 1.1 4.9 2.9 6.5l1.5 4.8.6 3.5.5 5.2h5l.5-5.2.6-3.5 1.5-4.8A8 8 0 0028 13c0-4.4-3.6-8-8-8z" stroke="url(#flg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs><linearGradient id="flg" x1="12" y1="5" x2="28" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#7139DF"/><stop offset="1" stop-color="#A442E8"/></linearGradient></defs>
+          </svg>
           <div>
-            <div class="footer-logo-name">D.ª Debbie Costa</div>
-            <div class="footer-logo-sub">Dental Clinic</div>
+            <div class="footer-brand-name">Clínica Dentária</div>
+            <div class="footer-brand-sub">Debbie Costa</div>
           </div>
         </div>
-        <p>Trusted family dental care in Cedros, Faial Island, Azores — for generations of patients who call this island home.</p>
+        <p class="footer-desc">Cuidados de saúde oral próximos da comunidade de Cedros, Faial — Açores, Portugal.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+          </a>
+        </div>
       </div>
-      <div>
-        <h5>Services</h5>
+      <div class="footer-col">
+        <h5>Tratamentos</h5>
         <ul>
-          <li><a href="#services">Preventive Care</a></li>
-          <li><a href="#services">Cosmetic Dentistry</a></li>
-          <li><a href="#services">Restorative Dentistry</a></li>
-          <li><a href="#services">Scaling &amp; Cleaning</a></li>
-          <li><a href="#services">Prosthetics</a></li>
-          <li><a href="#services">Emergency Care</a></li>
+          <li><a href="#tratamentos">Medicina Dentária</a></li>
+          <li><a href="#tratamentos">Cirurgia Oral</a></li>
+          <li><a href="#tratamentos">Periodontologia</a></li>
+          <li><a href="#tratamentos">Prostodontia</a></li>
+          <li><a href="#tratamentos">Ortodontia</a></li>
         </ul>
       </div>
-      <div>
-        <h5>Contact</h5>
+      <div class="footer-col">
+        <h5>A Clínica</h5>
         <ul>
-          <li><a href="tel:+351292946800">292 946 800</a></li>
-          <li><a href="tel:+351964625270">964 625 270</a></li>
-          <li><a href="https://wa.me/351964625270">WhatsApp</a></li>
+          <li><a href="#clinica">Sobre nós</a></li>
+          <li><a href="#saude-oral">Saúde Oral</a></li>
+          <li><a href="#saude-oral">Perguntas Frequentes</a></li>
+          <li><a href="#pacientes">Pacientes</a></li>
         </ul>
       </div>
-      <div>
-        <h5>Location</h5>
+      <div class="footer-col">
+        <h5>Contacto</h5>
         <ul>
-          <li><a href="https://maps.google.com/?q=Estrada+Regional+4-A+Cedros+Faial">Estrada Regional, 4-A</a></li>
-          <li><a href="#">9900-241 Cedros</a></li>
-          <li><a href="#">Ilha do Faial, Açores</a></li>
-          <li><a href="#">Portugal</a></li>
+          <li><a href="tel:+351292946800">+351 292 946 800</a></li>
+          <li><a href="mailto:clinicadentariadebbiecosta@hotmail.com">E-mail</a></li>
+          <li><a href="#pacientes">Estrada Regional, nº 4-A</a></li>
+          <li><a href="#pacientes">Cedros, Faial, Açores</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Clínica Dentária D.ª Debbie Costa — All rights reserved</span>
+      <span>© 2025 Clínica Dentária D.ª Debbie Costa · Todos os direitos reservados</span>
       <span>Cedros · Faial · Açores · Portugal</span>
     </div>
   </div>
 </footer>
 
+<!-- ══════════════════════════════════
+     MOBILE BAR
+══════════════════════════════════ -->
+<div class="mobile-bar">
+  <a href="tel:+351292946800" class="mb-call">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 012 4.18 2 2 0 014 2h3a2 2 0 012 1.72c.127.96.361 1.9.7 2.81a2 2 0 01-.45 2.11L8.91 9.91a16 16 0 006.06 6.06l1.27-.74a2 2 0 012.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0122 17z"/></svg>
+    Ligar
+  </a>
+  <a href="#contactos" class="mb-book">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Marcar Consulta
+  </a>
+</div>
+
 <script>
-const secs = document.querySelectorAll('section[id],div[id],footer[id]');
-const links = document.querySelectorAll('.nav-links a');
+/* Sticky header */
+const header = document.getElementById('header');
 window.addEventListener('scroll', () => {
-  let cur = '';
-  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
-  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  header.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
+
+/* Scroll reveal */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* Active nav */
+const sections = document.querySelectorAll('section[id], .cta-strip[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => navObserver.observe(s));
+
+/* FAQ accordion */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  });
+});
 </script>
 </body>
 </html>
