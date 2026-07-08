@@ -908,6 +908,42 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .footer-bottom a { color:rgba(255,255,255,.22); transition:color var(--transition); }
 .footer-bottom a:hover { color:rgba(255,255,255,.5); }
 
+/* Service card image */
+.svc-img {
+  width: 100%;
+  height: 140px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+.svc-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.svc-card:hover .svc-img img { transform: scale(1.06); }
+
+/* Feature panel image thumbnails */
+.feat-img {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.feat-img img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+
+/* About card image */
+.about-card-img {
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.about-card-img img { width:100%; height:100%; object-fit:cover; }
+
 /* ═══════════════════════════════════════
    MOBILE STICKY BAR
 ═══════════════════════════════════════ */
@@ -1069,10 +1105,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   <!-- Right image -->
   <div class="hero-right">
     <div class="hero-img-wrap">
-      <video autoplay muted loop playsinline poster="assets/images/clinic-interior.jpg">
+      <video autoplay muted loop playsinline poster="assets/images/hero-banner.jpg">
         <source src="assets/videos/hero.mp4" type="video/mp4">
       </video>
-      <img src="assets/images/clinic-interior.jpg" alt="Clínica Dentária Debbie Costa — ambiente clínico moderno">
+      <img src="assets/images/hero-banner.jpg" alt="Clínica Dentária Debbie Costa — ambiente clínico moderno">
     </div>
   </div>
 </section>
@@ -1084,6 +1120,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   <div class="features-panel">
     <div class="features-card reveal">
       <div class="feat-col">
+        <div class="feat-img">
+          <img src="assets/images/happy-patient.jpg" alt="Cuidado personalizado">
+        </div>
         <div class="feat-icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </div>
@@ -1091,6 +1130,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <div class="feat-desc">Acompanhamento pensado de acordo com as necessidades de cada paciente.</div>
       </div>
       <div class="feat-col">
+        <div class="feat-img">
+          <img src="assets/images/clinic-chair.jpg" alt="Diferentes áreas de cuidado">
+        </div>
         <div class="feat-icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
         </div>
@@ -1098,6 +1140,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <div class="feat-desc">Medicina Dentária Geral, Cirurgia Oral, Periodontologia, Prostodontia e Ortodontia.</div>
       </div>
       <div class="feat-col">
+        <div class="feat-img">
+          <img src="assets/images/team-photo.png" alt="Comunicação clara">
+        </div>
         <div class="feat-icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         </div>
@@ -1105,6 +1150,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <div class="feat-desc">Orientação simples e próxima para compreender cada etapa dos seus cuidados.</div>
       </div>
       <div class="feat-col">
+        <div class="feat-img">
+          <img src="assets/images/reception.jpg" alt="Atendimento de proximidade">
+        </div>
         <div class="feat-icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
@@ -1134,10 +1182,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </div>
     <!-- Center image -->
     <div class="about-img-wrap reveal reveal-delay-1">
-      <video autoplay muted loop playsinline poster="assets/images/reception.jpg">
+      <video autoplay muted loop playsinline poster="assets/images/clinic-interior-about.jpg">
         <source src="assets/videos/about-video.mp4" type="video/mp4">
       </video>
-      <img src="assets/images/reception.jpg" alt="Interior da Clínica Dentária Debbie Costa">
+      <img src="assets/images/clinic-interior-about.jpg" alt="Interior da Clínica Dentária Debbie Costa">
     </div>
     <!-- Right cards -->
     <div class="about-cards">
@@ -1185,6 +1233,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </div>
     <div class="svc-grid">
       <div class="svc-card reveal">
+        <div class="svc-img">
+          <img src="assets/images/svc-preventive.jpg" alt="Consulta de Medicina Dentária">
+        </div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4C9.2 4 7 6.2 7 9c0 1.8.8 3.3 2.1 4.3L10 16l.7 3.5h2.6l.7-3.5.9-2.7A5 5 0 0017 9c0-2.8-2.2-5-5-5z"/><path d="M9.5 9h5"/></svg>
         </div>
@@ -1196,6 +1247,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
       </div>
       <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-img">
+          <img src="assets/images/poster-extractions.jpg" alt="Cirurgia Oral">
+        </div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
         </div>
@@ -1207,6 +1261,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
       </div>
       <div class="svc-card reveal reveal-delay-2">
+        <div class="svc-img">
+          <img src="assets/images/happy-patient.jpg" alt="Periodontologia">
+        </div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </div>
@@ -1218,6 +1275,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
       </div>
       <div class="svc-card reveal reveal-delay-3">
+        <div class="svc-img">
+          <img src="assets/images/poster-dental-implants.jpg" alt="Prostodontia">
+        </div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="2"/><path d="M5 12v5a2 2 0 002 2h10a2 2 0 002-2v-5"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
         </div>
@@ -1229,6 +1289,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
       </div>
       <div class="svc-card reveal reveal-delay-4">
+        <div class="svc-img">
+          <img src="assets/images/poster-orthodontics.jpg" alt="Ortodontia">
+        </div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
         </div>
@@ -1240,6 +1303,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         </div>
       </div>
       <div class="svc-card reveal reveal-delay-4">
+        <div class="svc-img">
+          <img src="assets/images/poster-cosmetic-dentistry.jpg" alt="Avaliação de Saúde Oral">
+        </div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
         </div>
