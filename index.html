@@ -987,6 +987,7 @@ h1, h2, h3 {
   object-fit: cover;
   transition: transform .5s ease;
   display: block;
+  flex-shrink: 0;
 }
 .svc-img video { position: absolute; inset: 0; }
 .svc-img img { position: relative; z-index: 0; }
@@ -1000,18 +1001,32 @@ h1, h2, h3 {
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 4px;
+  flex-shrink: 0;
 }
 .feat-img img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+.feat-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 /* About card image */
 .about-card-img {
   width: 100%;
-  height: 80px;
+  height: 110px;
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 4px;
+  flex-shrink: 0;
 }
 .about-card-img img { width:100%; height:100%; object-fit:cover; }
+.about-card p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 /* ═══════════════════════════════════════
    MOBILE STICKY BAR
