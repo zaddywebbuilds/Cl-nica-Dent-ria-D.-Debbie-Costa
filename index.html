@@ -1087,6 +1087,348 @@ h1, h2, h3 {
   .feat-col { border-right:none !important; }
   .about-cards { flex-direction:column; }
 }
+
+/* ═══════════════════════════════════════
+   STICKY BOOKING BAR (desktop, below header)
+═══════════════════════════════════════ */
+.booking-bar {
+  position: fixed;
+  top: 90px; left: 0; right: 0;
+  z-index: 195;
+  background: rgba(42,31,26,.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,169,97,.18);
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--pad-x);
+  justify-content: space-between;
+  gap: 2rem;
+  transform: translateY(-100%);
+  transition: transform .42s cubic-bezier(.4,0,.2,1);
+}
+.booking-bar.shown { transform: translateY(0); }
+.booking-bar-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-weight: 600;
+  color: rgba(255,255,255,.85);
+}
+.booking-bar-actions { display:flex; align-items:center; gap:16px; flex-shrink:0; }
+.booking-bar-phone {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: rgba(255,255,255,.55);
+}
+.booking-bar .bb-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--g-cta);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  padding: 0 18px; height: 36px; border-radius: 18px;
+  white-space: nowrap;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.booking-bar .bb-btn:hover { opacity:.9; transform:translateY(-1px); }
+.booking-bar .bb-btn svg { width:12px; height:12px; }
+@media (max-width: 860px) { .booking-bar { display:none; } }
+
+/* ═══════════════════════════════════════
+   STATS STRIP
+═══════════════════════════════════════ */
+.stats-strip {
+  background: var(--cream);
+  padding: 72px 0 88px;
+}
+.stats-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 24px;
+  position: relative;
+}
+.stat-item::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: rgba(200,160,120,.25);
+}
+.stat-item:last-child::after { display:none; }
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(56px,6vw,88px);
+  font-weight: 600;
+  line-height: 1;
+  background: var(--g-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+.stat-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11.5px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+.stat-desc {
+  font-size: 13.5px; color: var(--ink-soft); line-height: 1.55;
+}
+@media (max-width: 560px) {
+  .stats-inner { grid-template-columns: 1fr; }
+  .stat-item::after { top:auto; bottom:0; left:20%; right:20%; width:auto; height:1px; }
+  .stat-item:last-child::after { display:none; }
+}
+
+/* ═══════════════════════════════════════
+   MEET THE DOCTOR
+═══════════════════════════════════════ */
+.doctor {
+  background: var(--sand);
+  padding: 100px 0;
+}
+.doctor-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+.doctor-img-col { position: relative; }
+.doctor-img-wrap {
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  box-shadow: 0 40px 100px rgba(120,70,50,.16);
+}
+.doctor-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.doctor-name-card {
+  position: absolute;
+  bottom: 24px; left: 24px; right: 24px;
+  background: var(--glass-strong);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 32px rgba(120,70,50,.14);
+}
+.doctor-card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 600; color: var(--ink);
+  margin-bottom: 3px;
+}
+.doctor-card-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .11em;
+  text-transform: uppercase; color: var(--coral-deep);
+}
+.doctor-copy h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px,3vw,48px); font-weight: 600;
+  line-height: 1.1; letter-spacing: -.01em; color: var(--ink);
+  margin-bottom: 20px;
+}
+.doctor-copy p {
+  font-size: 16.5px; color: var(--ink-soft); line-height: 1.78;
+  margin-bottom: 14px; max-width: 52ch;
+}
+.doctor-quals {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 26px 0 32px;
+}
+.doctor-qual-row {
+  display: flex; align-items: center; gap: 12px;
+}
+.doctor-qual-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--g-cta); flex-shrink: 0;
+}
+.doctor-qual-text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px; font-weight: 600; color: var(--ink-soft);
+}
+@media (max-width: 860px) {
+  .doctor-inner { grid-template-columns: 1fr; gap: 40px; }
+  .doctor-img-wrap { aspect-ratio: 4/3; }
+}
+
+/* ═══════════════════════════════════════
+   GALLERY + LIGHTBOX
+═══════════════════════════════════════ */
+.gallery { background: var(--cream); padding: 100px 0; overflow: hidden; }
+.gallery-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.gallery-head { text-align: center; margin-bottom: 48px; }
+.gallery-head h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,2.8vw,44px); font-weight:600; letter-spacing:-.01em; color:var(--ink); }
+.gallery-head p { font-size:15.5px; color:var(--ink-muted); margin-top:10px; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-rows: 240px 240px;
+  gap: 12px;
+}
+.gallery-thumb {
+  border-radius: 16px; overflow: hidden;
+  cursor: pointer; position: relative;
+}
+.gallery-thumb:first-child { grid-row: 1 / 3; }
+.gallery-thumb img {
+  width:100%; height:100%; object-fit:cover;
+  transition: transform .6s ease;
+}
+.gallery-thumb:hover img { transform: scale(1.07); }
+.gallery-thumb::after {
+  content:'';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(42,31,26,.5) 100%);
+  opacity: 0; transition: opacity .4s;
+}
+.gallery-thumb:hover::after { opacity: 1; }
+.gallery-zoom-icon {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(.7);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s, transform .3s;
+  z-index: 2;
+}
+.gallery-thumb:hover .gallery-zoom-icon { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+.gallery-zoom-icon svg { width:20px; height:20px; color:#fff; }
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(26,15,8,.93);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s;
+}
+.lightbox.open { opacity: 1; pointer-events: all; }
+.lightbox-img {
+  max-width: 88vw; max-height: 86vh;
+  border-radius: 14px; object-fit: contain;
+  box-shadow: 0 40px 120px rgba(0,0,0,.6);
+  transform: scale(.94);
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+.lightbox.open .lightbox-img { transform: scale(1); }
+.lightbox-close {
+  position: absolute; top: 22px; right: 26px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background var(--transition);
+}
+.lightbox-close:hover { background: rgba(229,102,74,.4); }
+.lightbox-close svg { width: 20px; height: 20px; color: #fff; }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background var(--transition);
+}
+.lightbox-nav:hover { background: rgba(229,102,74,.35); }
+.lightbox-nav svg { width: 20px; height: 20px; color: #fff; }
+.lightbox-prev { left: 22px; } .lightbox-next { right: 22px; }
+@media (max-width: 860px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-thumb:first-child { grid-row: auto; }
+}
+@media (max-width: 560px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-thumb { aspect-ratio: 4/3; }
+}
+
+/* ═══════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════ */
+.testimonials { background: var(--sand); padding: 100px 0; }
+.testimonials-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.testimonials-head { text-align: center; margin-bottom: 52px; }
+.testimonials-head h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,2.8vw,44px); font-weight:600; letter-spacing:-.01em; color:var(--ink); margin-bottom:8px; }
+.testimonials-head p { font-size:15.5px; color:var(--ink-muted); }
+.testi-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.testi-card {
+  background: var(--glass-strong);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(200,160,120,.22);
+  border-radius: 22px;
+  padding: 28px 26px;
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.7);
+  display: flex; flex-direction: column; gap: 16px;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.testi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover), inset 0 1px 0 rgba(255,255,255,.7);
+}
+.testi-stars { display:flex; gap:3px; }
+.testi-star { color: var(--gold); }
+.testi-star svg { width:16px; height:16px; fill:currentColor; }
+.testi-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-weight: 500; font-style: italic;
+  color: var(--ink); line-height: 1.65; flex: 1;
+}
+.testi-author {
+  display: flex; align-items: center; gap: 12px;
+  border-top: 1px solid rgba(200,160,120,.2);
+  padding-top: 16px;
+}
+.testi-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.testi-name { font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--ink); line-height:1.2; }
+.testi-treatment { font-size:12px; color:var(--ink-muted); margin-top:1px; }
+@media (max-width: 860px) { .testi-track { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .testi-track { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════
+   CURSOR GLOW
+═══════════════════════════════════════ */
+#cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(229,102,74,.07) 0%, rgba(201,169,97,.04) 40%, transparent 70%);
+  transform: translate(-50%, -50%);
+  left: -999px; top: -999px;
+  transition: left .16s ease, top .16s ease;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  will-change: left, top;
+}
+@media (hover: none) { #cursor-glow { display:none; } }
 </style>
 </head>
 <body>
@@ -1129,6 +1471,20 @@ h1, h2, h3 {
     </a>
   </div>
 </header>
+
+<!-- ══════════════════════════════════
+     STICKY BOOKING BAR
+══════════════════════════════════ -->
+<div class="booking-bar" id="booking-bar">
+  <span class="booking-bar-text">Clínica Dentária D.ª Debbie Costa</span>
+  <div class="booking-bar-actions">
+    <span class="booking-bar-phone">+351 292 946 800</span>
+    <a href="#contactos" class="bb-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Marcar Consulta
+    </a>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════
      HERO
@@ -1227,6 +1583,29 @@ h1, h2, h3 {
 </div>
 
 <!-- ══════════════════════════════════
+     STATS STRIP
+══════════════════════════════════ -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="6">0</div>
+      <div class="stat-label">Tratamentos Disponíveis</div>
+      <div class="stat-desc">Medicina Dentária · Cirurgia · Periodontologia · Prostodontia · Ortodontia · Saúde Oral</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-number" data-target="5">0</div>
+      <div class="stat-label">Especialidades</div>
+      <div class="stat-desc">Cobertura completa das necessidades de saúde oral em Faial</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-number" data-target="1">0</div>
+      <div class="stat-label">Clínica em Cedros</div>
+      <div class="stat-desc">Cuidados de saúde oral próximos da comunidade de Cedros, Faial</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
      ABOUT
 ══════════════════════════════════ -->
 <section class="about" id="clinica">
@@ -1273,6 +1652,47 @@ h1, h2, h3 {
         <h4>Saúde Oral Integrada</h4>
         <p>Diferentes áreas de cuidados em Medicina Dentária num só espaço.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     MEET THE DOCTOR
+══════════════════════════════════ -->
+<section class="doctor" id="medica">
+  <div class="doctor-inner">
+    <div class="doctor-img-col reveal">
+      <div class="doctor-img-wrap">
+        <img src="assets/images/team-photo.png" alt="Dra. Debbie Costa — Médica Dentista">
+      </div>
+      <div class="doctor-name-card">
+        <div class="doctor-card-name">Dra. Debbie Costa</div>
+        <div class="doctor-card-title">Médica Dentista · Cedros, Faial</div>
+      </div>
+    </div>
+    <div class="doctor-copy reveal reveal-delay-1">
+      <span class="eyebrow">A Nossa Médica</span>
+      <h2>Uma abordagem próxima,<br><span class="gradient-text">ao serviço do seu sorriso.</span></h2>
+      <p>A Dra. Debbie Costa é médica dentista dedicada aos cuidados de saúde oral da comunidade do Faial. Com uma abordagem próxima e personalizada, o seu objectivo é que cada paciente se sinta acompanhado e confiante ao longo do seu percurso de saúde oral.</p>
+      <p>Acredita que uma boa relação entre médico e paciente é a base de um tratamento bem-sucedido — por isso dedica tempo a ouvir, explicar e orientar cada pessoa de forma individual.</p>
+      <div class="doctor-quals">
+        <div class="doctor-qual-row">
+          <div class="doctor-qual-dot"></div>
+          <span class="doctor-qual-text">Médica Dentista — Ordem dos Médicos Dentistas</span>
+        </div>
+        <div class="doctor-qual-row">
+          <div class="doctor-qual-dot"></div>
+          <span class="doctor-qual-text">Medicina Dentária Geral e Especialidades</span>
+        </div>
+        <div class="doctor-qual-row">
+          <div class="doctor-qual-dot"></div>
+          <span class="doctor-qual-text">Atendimento em Cedros, Faial, Açores</span>
+        </div>
+      </div>
+      <a href="#contactos" class="btn-primary" style="width:fit-content;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Marcar Consulta
+      </a>
     </div>
   </div>
 </section>
@@ -1384,6 +1804,59 @@ h1, h2, h3 {
 </section>
 
 <!-- ══════════════════════════════════
+     GALLERY
+══════════════════════════════════ -->
+<section class="gallery" id="galeria">
+  <div class="gallery-inner">
+    <div class="gallery-head reveal">
+      <span class="eyebrow">A Nossa Clínica</span>
+      <h2>Um espaço pensado<br><span class="gradient-text">para o seu bem-estar.</span></h2>
+      <p>Conheça os nossos espaços — clique em qualquer imagem para ampliar.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-thumb reveal">
+        <img src="assets/images/clinic-interior.jpg" alt="Interior da clínica">
+        <div class="gallery-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="gallery-thumb reveal reveal-delay-1">
+        <img src="assets/images/reception.jpg" alt="Recepção">
+        <div class="gallery-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="gallery-thumb reveal reveal-delay-2">
+        <img src="assets/images/clinic-chair.jpg" alt="Cadeira clínica">
+        <div class="gallery-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="gallery-thumb reveal reveal-delay-1">
+        <img src="assets/images/gallery-smile-teeth.jpg" alt="Sorriso saudável">
+        <div class="gallery-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="gallery-thumb reveal reveal-delay-2">
+        <img src="assets/images/happy-patient.jpg" alt="Paciente satisfeita">
+        <div class="gallery-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="gallery-thumb reveal reveal-delay-3">
+        <img src="assets/images/clinic-interior-about.jpg" alt="Interior clínico">
+        <div class="gallery-zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Fechar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Galeria">
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Seguinte">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════
      CTA BANNER
 ══════════════════════════════════ -->
 <div class="cta-strip" id="contactos">
@@ -1417,6 +1890,72 @@ h1, h2, h3 {
     </div>
   </div>
 </div>
+
+<!-- ══════════════════════════════════
+     TESTIMONIALS  (replace with real patient quotes)
+══════════════════════════════════ -->
+<section class="testimonials" id="testemunhos">
+  <div class="testimonials-inner">
+    <div class="testimonials-head reveal">
+      <span class="eyebrow">O que dizem os nossos pacientes</span>
+      <h2>Palavras que nos<br><span class="gradient-text">enchem de orgulho.</span></h2>
+      <p>A confiança dos nossos pacientes é a nossa maior conquista.</p>
+    </div>
+    <div class="testi-track">
+      <div class="testi-card reveal">
+        <div class="testi-stars">
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <p class="testi-quote">"Fui atendida com muita atenção e cuidado. A Dra. Debbie explicou tudo com clareza e senti-me sempre em boas mãos. Recomendo a qualquer pessoa."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AS</div>
+          <div>
+            <div class="testi-name">Ana S.</div>
+            <div class="testi-treatment">Consulta de Medicina Dentária</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <p class="testi-quote">"Excelente profissionalismo. O meu tratamento correu muito bem e fui sempre bem informado em cada etapa. Uma clínica de confiança aqui no Faial."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MF</div>
+          <div>
+            <div class="testi-name">Manuel F.</div>
+            <div class="testi-treatment">Cirurgia Oral</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="testi-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <p class="testi-quote">"Finalmente uma clínica de confiança perto de nós, em Cedros. Trago toda a família aqui. O atendimento é sempre próximo e muito profissional."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SM</div>
+          <div>
+            <div class="testi-name">Sofia M.</div>
+            <div class="testi-treatment">Saúde Oral em Família</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══════════════════════════════════
      FAQ
@@ -1606,22 +2145,24 @@ h1, h2, h3 {
   </a>
 </div>
 
+<div id="cursor-glow"></div>
+
 <script>
-/* Sticky header */
+/* ── Sticky header ── */
 const header = document.getElementById('header');
 window.addEventListener('scroll', () => {
   header.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-/* Scroll reveal */
-const observer = new IntersectionObserver((entries) => {
+/* ── Scroll reveal ── */
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-/* Active nav */
+/* ── Active nav ── */
 const sections = document.querySelectorAll('section[id], .cta-strip[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 const navObserver = new IntersectionObserver((entries) => {
@@ -1633,7 +2174,7 @@ const navObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 sections.forEach(s => navObserver.observe(s));
 
-/* FAQ accordion */
+/* ── FAQ accordion ── */
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.closest('.faq-item');
@@ -1642,6 +2183,98 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     if (!isOpen) item.classList.add('open');
     btn.setAttribute('aria-expanded', !isOpen);
   });
+});
+
+/* ── Sticky booking bar ── */
+const bookingBar = document.getElementById('booking-bar');
+const heroSection = document.querySelector('.hero');
+if (bookingBar && heroSection) {
+  const heroBarObserver = new IntersectionObserver(([e]) => {
+    bookingBar.classList.toggle('shown', !e.isIntersecting);
+  }, { threshold: 0.05 });
+  heroBarObserver.observe(heroSection);
+}
+
+/* ── Counter animation ── */
+function animateCounter(el) {
+  const target = +el.dataset.target;
+  const duration = 1600;
+  const start = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target);
+    if (p < 1) requestAnimationFrame(tick);
+  })(start);
+}
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { animateCounter(e.target); counterObserver.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+
+/* ── Parallax hero ── */
+const heroImgWrap = document.querySelector('.hero-img-wrap');
+if (heroImgWrap) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY < window.innerHeight * 1.2) {
+      heroImgWrap.style.transform = 'translateY(' + (window.scrollY * 0.14) + 'px)';
+    }
+  }, { passive: true });
+}
+
+/* ── Cursor glow ── */
+const glowEl = document.getElementById('cursor-glow');
+if (glowEl && window.matchMedia('(hover: hover)').matches) {
+  document.addEventListener('mousemove', e => {
+    glowEl.style.left = e.clientX + 'px';
+    glowEl.style.top = e.clientY + 'px';
+  }, { passive: true });
+}
+
+/* ── Magnetic buttons ── */
+document.querySelectorAll('.btn-primary, .btn-book, .btn-white, .bb-btn').forEach(btn => {
+  btn.addEventListener('mousemove', function(e) {
+    const r = this.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width / 2;
+    const y = e.clientY - r.top - r.height / 2;
+    this.style.transform = 'translate(' + (x * 0.16) + 'px,' + (y * 0.2) + 'px) translateY(-2px)';
+  });
+  btn.addEventListener('mouseleave', function() { this.style.transform = ''; });
+});
+
+/* ── Gallery lightbox ── */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const galleryThumbs = [...document.querySelectorAll('.gallery-thumb img')];
+const galleryImages = galleryThumbs.map(img => img.src);
+let lbIndex = 0;
+
+document.querySelectorAll('.gallery-thumb').forEach((thumb, i) => {
+  thumb.addEventListener('click', () => {
+    lbIndex = i;
+    lightboxImg.src = galleryImages[i];
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+function closeLightbox() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.getElementById('lightbox-prev').addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + galleryImages.length) % galleryImages.length;
+  lightboxImg.src = galleryImages[lbIndex];
+});
+document.getElementById('lightbox-next').addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % galleryImages.length;
+  lightboxImg.src = galleryImages[lbIndex];
+});
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') document.getElementById('lightbox-prev').click();
+  if (e.key === 'ArrowRight') document.getElementById('lightbox-next').click();
 });
 </script>
 </body>
