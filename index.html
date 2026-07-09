@@ -1194,6 +1194,17 @@ h1, h2, h3 {
   background: rgba(200,160,120,.25);
 }
 .stat-item:last-child::after { display:none; }
+.stat-media {
+  width: 100%; height: 140px;
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 20px; flex-shrink: 0;
+  position: relative;
+}
+.stat-media img, .stat-media video {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.stat-media video { position: absolute; inset: 0; }
 .stat-number {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(56px,6vw,88px);
@@ -1843,16 +1854,28 @@ h1, h2, h3 {
 <div class="stats-strip">
   <div class="stats-inner">
     <div class="stat-item reveal">
+      <div class="stat-media">
+        <video autoplay muted loop playsinline poster="assets/images/svc-preventive.jpg">
+          <source src="assets/videos/svc-scaling.mp4" type="video/mp4">
+        </video>
+        <img src="assets/images/svc-preventive.jpg" alt="Tratamentos dentários">
+      </div>
       <div class="stat-number" data-target="6">0</div>
       <div class="stat-label">Tratamentos Disponíveis</div>
       <div class="stat-desc">Medicina Dentária · Cirurgia · Periodontologia · Prostodontia · Ortodontia · Saúde Oral</div>
     </div>
     <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-media">
+        <img src="assets/images/poster-cosmetic-dentistry.jpg" alt="Especialidades dentárias">
+      </div>
       <div class="stat-number" data-target="5">0</div>
       <div class="stat-label">Especialidades</div>
       <div class="stat-desc">Cobertura completa das necessidades de saúde oral em Faial</div>
     </div>
     <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-media">
+        <img src="assets/images/clinic-chair.jpg" alt="Clínica em Cedros">
+      </div>
       <div class="stat-number" data-target="1">0</div>
       <div class="stat-label">Clínica em Cedros</div>
       <div class="stat-desc">Cuidados de saúde oral próximos da comunidade de Cedros, Faial</div>
